@@ -1,0 +1,5 @@
+/* fill the viewport */
+html, body, #map { height: 100%; margin: 0; }
+
+/* (optional) tweak Leaflet attribution font */
+.leaflet-control-attribution { font-size: 11px; }

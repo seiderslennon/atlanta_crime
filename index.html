@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Crime Heat-map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
+  <!-- Leaflet core -->
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- 3 kB heat-map plugin -->
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7.2.0/turf.min.js"></script>
+    <script src="https://unpkg.com/leaflet-tilelayer-prefetch@0.4.0/dist/Leaflet.TileLayer.Prefetch.min.js"></script>
+
+  <!-- project-specific assets -->
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/app.js"></script>
+</head>
+<style>
+
+  #crime-filters {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;            /* sit above the map tiles */
+    background: rgba(255,255,255,0.9);
+    padding: 6px;
+    border-radius: 4px;
+    /* box-shadow: 0 0 6px rgba(0,0,0,0.3); */
+    font-size: 1em;
+    font-family: "Inconsolata", sans-serif;
+    font-weight: 800;   
+  }
+  #crime-filters label {
+    display: block;
+    margin-bottom: 4px;
+  }
+  #crime-filters input[type="checkbox"] {
+    accent-color: rgb(0, 0, 0);      /* checkmark color */
+    background-color: black;/* outer box fill when unchecked */
+    }
+</style>
+<body>
+  <div id="crime-filters">
+  <label><input type="checkbox" value="Property" checked> Property</label>
+  <label><input type="checkbox" value="Society" checked> Society</label>
+  <label><input type="checkbox" value="Person" checked> Person</label>
+</div>
+<div id="map"></div>
+</body>
+</html>
