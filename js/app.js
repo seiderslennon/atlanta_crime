@@ -1,4 +1,3 @@
-// **1**: define your bounds _before_ you use them
 const cityBounds = [
   [33.6501, -84.27],
   [33.8501, -84.4885]
@@ -17,7 +16,6 @@ L.tileLayer(
   { attribution: '© Stadia Maps, © OpenStreetMap' }
 ).addTo(map);
 
-// 1) fetch and cache your GeoJSON
 let allFeatures = [];
 fetch('data/crimes_reduced.geojson')
   .then(res => res.json())
@@ -43,32 +41,31 @@ function initHeat() {
     }
   }).addTo(map);
   
-  // draw the initial data
   updateHeat();
 }
 
-// 2) wire up the checkboxes
 function initFilters() {
   const inputs = document
     .querySelectorAll('#crime-filters input[type=checkbox]');
   inputs.forEach(cb => cb.addEventListener('change', updateHeat));
 }
 
-// 3) filter + re-draw
+const countEl = document.getElementById('crime-count');
+
 function updateHeat() {
-  // which types are checked?
   const active = Array.from(
     document.querySelectorAll('#crime-filters input:checked')
   ).map(cb => cb.value);
-  
-  // build new heatData
-  const heatData = allFeatures
-    .filter(f => active.includes(f.properties.Crime_Against))
-    .map(f => {
-      const [lon, lat] = f.geometry.coordinates;
-      return [lat, lon, 1];
-    });
-  
-  // replace the points in the heat layer
+
+  const filtered = allFeatures.filter(f =>
+    active.includes(f.properties.Crime_Against)
+  );
+  const heatData = filtered.map(f => {
+    const [lon, lat] = f.geometry.coordinates;
+    return [lat, lon, 1];
+  });
+
   heatLayer.setLatLngs(heatData);
+
+  countEl.textContent = filtered.length.toLocaleString();
 }
